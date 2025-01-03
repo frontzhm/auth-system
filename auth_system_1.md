@@ -143,18 +143,13 @@ module.exports = {
 }
 ```
 
-## 7. 配置.eslintrc - 统一代码规范
+## 7. 配置eslint.config.js - 统一代码规范，检查代码
 
-在项目根目录下创建`.eslintrc`文件，配置`eslint`的一些规则，确保团队成员的代码规范一致。
+eslint是一个代码检查工具，可以帮助我们统一代码风格，确保团队成员的代码风格一致。[官网](https://eslint.org/)，也可以[在线玩下](https://eslint.org/demo/)
 
-```json
-{
-  "extends": ["react-app", "plugin:prettier/recommended"],
-  "rules": {
-    "prettier/prettier": "error"
-  }
-}
-```
+和prettier有什么区别呢？prettier是一个代码格式化工具，eslint是一个代码检查工具，prettier只负责代码格式化，eslint可以检查代码错误、代码风格等。
+
+最新的vite已经集成了eslint，所以不用处理。
 
 ## 疑问区
 
@@ -170,3 +165,23 @@ module.exports = {
 2. 为什么要使用`pnpm`？
 
 `pnpm`是一个快速、节省磁盘空间的包管理工具，它的特点是共享依赖，不会重复下载依赖包，节省磁盘空间。`pnpm`的速度比`npm`和`yarn`都要快，可以提高开发效率。
+
+3. 为什么要使用`React18`？
+
+`React18`是一个新的版本，它的特点是`Concurrent Mode`和`Server Components`，可以提高性能，提高用户体验。
+
+4. 为什么要使用`ReactRouter7`？
+
+`ReactRouter7`是一个新的版本，它的特点是`Routes`和`useRoutes`，可以提高性能，提高用户体验。
+
+5. 为什么要使用`Antd5`？
+
+`Antd5`是一个新的版本，它的特点是`TreeSelect`和`Cascader`，可以提高性能，提高用户体验。
+
+6. 为什么要使用`zustand`？
+
+`zustand`是一个新的状态管理库，它的特点是`immer`和`dva`，可以提高性能，提高用户体验。
+
+7. 为什么要使用`TS`？
+
+`TS`是一个新的语言，它的特点是`类型检查`和`代码提示`，可以提高性能，提高用户体验。
