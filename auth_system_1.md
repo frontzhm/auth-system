@@ -89,7 +89,19 @@ trim_trailing_whitespace = true
 trim_trailing_whitespace = false
 ```
 
+## 5. 配置.npmrc - 使用淘宝镜像
 
+在项目根目录下创建`.npmrc`文件，配置淘宝镜像，加快依赖包的下载速度。
+全局设置的话，可以在`~/.npmrc`中配置，也可以运行`npm config set registry https://registry.npmmirror.com/`命令。
+只是针对当前项目的话，可以在项目根目录下创建`.npmrc`文件，配置如下：
+
+```shell
+registry = "https://registry.npmmirror.com/"
+```
+
+如果用yarn的话，可以在项目根目录下创建`.yarnrc`文件，配置也是一样。
+
+pnpm安装移除的命令和npm一样，`pnpm install`和`pnpm remove`。
 
 ## 疑问区
 
@@ -101,3 +113,7 @@ trim_trailing_whitespace = false
 ```html
 <script type="module" src="/src/main.tsx"></script>
 ```
+
+2. 为什么要使用`pnpm`？
+
+`pnpm`是一个快速、节省磁盘空间的包管理工具，它的特点是共享依赖，不会重复下载依赖包，节省磁盘空间。`pnpm`的速度比`npm`和`yarn`都要快，可以提高开发效率。
