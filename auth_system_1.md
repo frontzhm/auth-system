@@ -26,5 +26,43 @@ pnpm create vite admin-system
 cd admin-system
 pnpm install
 pnpm run dev
-pnpm install react-router react-router-dom zustand antd
+pnpm install react-router react-router-dom zustand antd axios
 ```
+## 3. 配置@指向src目录
+
+需要两处配置
+- `vite.config.ts`中配置，让vite能够识别`@`指向`src`目录，编译成功
+- `tsconfig.app.json`中配置，让`ts`能够识别`@`指向`src`目录，识别成功并能够跳转
+
+``
+
+在`vite.config.ts`中添加`alias`配置。
+
+```typescript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  // @配置别名
+  resolve: {
+    alias: {
+      '@': '/src/',
+    },
+  },
+})
+```
+
+在`tsconfig.app.json`中添加`"baseUrl": "./src"`，这样我们就可以使用`@`来指向`src`目录。
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    }
+  }
+}
+`
