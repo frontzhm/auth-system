@@ -6,7 +6,6 @@ theme: vue-pro
 highlight:
 ---
 
-
 本系列从零搭建一个后台系统，技术选型`React18 + ReactRouter7 + Vite4 + Antd5 + zustand  + TS`。
 这个系列文章将会从零开始，一步一步搭建一个后台系统，这个系统将会包括登录、权限、菜单、用户、角色等功能。
 
@@ -28,9 +27,11 @@ pnpm install
 pnpm run dev
 pnpm install react-router react-router-dom zustand antd axios
 ```
+
 ## 3. 配置@指向src目录 - 优化路径
 
 需要两处配置
+
 - `vite.config.ts`中配置，让vite能够识别`@`指向`src`目录，编译成功
 - `tsconfig.app.json`中配置，让`ts`能够识别`@`指向`src`目录，识别成功并能够跳转
 
@@ -53,6 +54,7 @@ export default defineConfig({
   },
 })
 ```
+
 t
 在`tsconfig.app.json`中添加`"baseUrl": "./src"`，这样我们就可以使用`@`来指向`src`目录。
 
@@ -102,6 +104,57 @@ registry = "https://registry.npmmirror.com/"
 如果用yarn的话，可以在项目根目录下创建`.yarnrc`文件，配置也是一样。
 
 pnpm安装移除的命令和npm一样，`pnpm install`和`pnpm remove`。
+
+## 6. 配置.prettierrc - 统一代码风格，格式化代码
+
+在项目根目录下创建`.prettierrc`文件，配置`prettier`的一些规则，确保团队成员的代码风格一致。[官网](https://www.prettier.cn/)，也可以[在线玩下](https://www.prettier.cn/playground/)
+
+```shell
+# pnpm install prettier --save-dev
+# 安装到开发依赖，线上不需要
+pnpm install prettier -D
+```
+
+以下是一个简单的配置，可以根据自己的需求进行配置。
+
+```js
+// .prettierrc.cjs
+module.exports = {
+  printWidth: 120, // 每行最大列，超过换行，默认80
+  semi: false, // 末尾分号，默认为true，改为false
+  singleQuote: true, // 使用单引号，默认为false，改为true
+  jsxSingleQuote: true, // jsx中使用单引号，默认为false，改为true
+  trailingComma: 'all', // 数组、对象最后一个元素后面是否加逗号（在ES5中加尾逗号），默认none，可选 none|es5|all
+  tabWidth: 2, // 缩进长度，默认2
+  endOfLine: 'lf', // 换行符，可选 lf|crlf|cr，默认lf
+  singleAttributePerLine: false, // 多个属性是否换行, 默认为false
+}
+```
+
+安装`prettier`插件，可以在VSCode中安装`Prettier - Code formatter`插件，希望保存时自动格式化代码，可以在项目里创建`.vscode/settings.json`文件，添加如下配置，表示项目范围内保存的时候，自动格式化代码。
+
+```json
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
+```
+
+## 7. 配置.eslintrc - 统一代码规范
+
+在项目根目录下创建`.eslintrc`文件，配置`eslint`的一些规则，确保团队成员的代码规范一致。
+
+```json
+{
+  "extends": ["react-app", "plugin:prettier/recommended"],
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}
+```
 
 ## 疑问区
 
