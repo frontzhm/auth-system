@@ -26,5 +26,5 @@ pnpm create vite admin-system
 cd admin-system
 pnpm install
 pnpm run dev
-# pnpm install react-router react-router-dom@next zustand antd
+pnpm install react-router react-router-dom zustand antd
 ```
