@@ -1,12 +1,12 @@
 ---
-title: 后台系统从零搭建（一）—— 框架
+title: 后台系统从零搭建（一）—— 项目基础
 tags: vue
 categories: vue
 theme: vue-pro
 highlight:
 ---
 
-本系列从零搭建一个后台系统，技术选型`React18 + ReactRouter7 + Vite4 + Antd5 + zustand  + TS`。
+本系列从零搭建一个后台系统，技术选型`React18 + ReactRouter6 + Vite4 + Antd5 + zustand  + TS`。
 这个系列文章将会从零开始，一步一步搭建一个后台系统，这个系统将会包括登录、权限、菜单、用户、角色等功能。
 
 ## 1. 创建项目
@@ -25,7 +25,6 @@ pnpm create vite admin-system
 cd admin-system
 pnpm install
 pnpm run dev
-pnpm install react-router react-router-dom zustand antd axios
 ```
 
 ## 3. 配置.editorconfig - 统一编辑器风格
