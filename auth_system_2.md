@@ -104,6 +104,60 @@ function App() {
 export default App
 ```
 
+### 1.4 额外备注
+
+路由可以通过路由组件，也可以通过API创建路由。
+
+API创建组件就是上面的方式，通过`createBrowserRouter`创建路由，然后通过`element`属性指定组件，在App.tsx中通过`RouterProvider`提供路由。
+
+```tsx
+// src/router/index.tsx
+import { createBrowserRouter } from 'react-router-dom'
+const routes = [{ path: '/', element: <Home /> }]
+const router = createBrowserRouter(routes)
+export default router
+
+// src/App.tsx
+import router from '@/router'
+import { RouterProvider } from 'react-router-dom'
+function App() {
+  return (
+    <div className='App'>
+      <RouterProvider router={router} />
+    </div>
+  )
+}
+export default App
+```
+
+路由组件的创建方式是通过`Route`组件，这种方式更加灵活，可以通过`children`属性传递子路由，可以通过`element`属性指定组件。
+
+```tsx
+// src/router/index.tsx
+import { useRoutes } from 'react-router-dom'
+const routes = [{ path: '/', element: <Home /> }]
+// Router 组件
+const Router = () => useRoutes(routes)
+/* 这里的Router组件等同于下面的写法
+  <Routes> 
+    <Route path='/' element={<Home />} /> 
+  </Routes>
+*/
+export default Router
+
+// src/App.tsx
+import Router from '@/router'
+function App() {
+  return (
+    <div className='App'>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </div>
+  )
+}
+```
+
 <!-- ### 1.3 路由封装 - 路由守卫
 
 ```tsx
