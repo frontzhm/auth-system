@@ -4,8 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "start": "pnpm run dev",
+    "dev": "pnpm run dev:dev",
+    "dev:dev": "vite --mode dev",
+    "dev:test": "vite --mode test",
+    "dev:prod": "vite --mode prod",
+    "build:test": "tsc -b && vite build --mode test",
+    "build:prod": "tsc -b && vite build --mode prod",
     "lint": "eslint .",
     "preview": "vite preview"
   },

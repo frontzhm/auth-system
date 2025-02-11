@@ -2,9 +2,11 @@ import axios from 'axios'
 import { message } from 'antd'
 import { showLoading, hideLoading } from '@/utils/loading'
 
+const BASE_URL = import.meta.env.VITE_BASE_URL
+
 // 创建 Axios 实例
 export const request = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: BASE_URL,
   timeout: 10000,
   timeoutErrorMessage: '请求超时，请稍后重试',
   withCredentials: true, // 跨域请求时是否需要使用凭证
