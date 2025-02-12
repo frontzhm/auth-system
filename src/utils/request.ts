@@ -1,8 +1,10 @@
 import axios from 'axios'
 import { message } from 'antd'
 import { showLoading, hideLoading } from '@/utils/loading'
+import config from '@/config'
 
-const BASE_URL = import.meta.env.VITE_BASE_URL
+// const BASE_URL = import.meta.env.VITE_BASE_URL
+const BASE_URL = config.baseURL
 
 // 创建 Axios 实例
 export const request = axios.create({
