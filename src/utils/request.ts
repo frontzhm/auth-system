@@ -1,7 +1,12 @@
 import axios from 'axios'
 import { message } from 'antd'
 import { showLoading, hideLoading } from '@/utils/loading'
-// import config from '@/config'
+export type IResponse<T = any> = {
+  data: T;
+  code: number;
+  message: string;
+  success: boolean;
+}
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
 // const BASE_URL = config.baseURL
@@ -39,7 +44,26 @@ request.interceptors.response.use(
   (response) => {
     // 关闭加载状态
     hideLoading()
-    return response.data // 直接返回响应数据，简化后续处理
+    console.log('response', response)
+    const { data } = response
+    const { success, code, message: msg } = data
+    if (!success) {
+      switch (code) {
+        case 400:
+          message.error('未授权，请登录')
+          break
+        case 404:
+          message.error('请求资源未找到')
+          break
+        case 500:
+          message.error('服务器错误')
+          break
+        default:
+          message.error(msg || '请求失败，请稍后重试')
+      }
+      return Promise.reject(data)
+    }
+    return data // 直接返回响应数据，简化后续处理
   },
   (error) => {
     // 关闭加载状态
