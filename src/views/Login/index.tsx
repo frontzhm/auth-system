@@ -17,8 +17,10 @@ const Login: React.FC = () => {
     localStorage.setItem('token', token)
     // 提示登陆成功
     message.success('登陆成功')
+    // callback 用于登陆成功后跳转到之前的页面 全网址
+    const callback = new URLSearchParams(window.location.search).get('callback')
     // 替换当前路由 去首页 这样用户就不能回到登陆页
-    navigate('/', { replace: true })
+    callback ? (location.href = callback) : navigate('/')
   }
 
   return (
