@@ -1,0 +1,17 @@
+.page-home {
+  .title {
+    font-size: 24px;
+    color: #333;
+  }
+  .content {
+    font-size: 16px;
+    color: #f69;
+  }
+  // 类名前加 :global 表示类名不会被 css module 处理
+  :global {
+    .ant-btn {
+      background-color: #f69;
+      color: #fff;
+    }
+  }
+}
