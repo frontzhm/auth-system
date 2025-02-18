@@ -1,14 +1,19 @@
 import router from '@/router'
+import { ConfigProvider } from 'antd'
 import { RouterProvider } from 'react-router-dom'
-// import { Suspense } from 'react'
-// import { Spin } from 'antd'
 
 function App() {
   return (
     <div className='App'>
-      {/* <Suspense fallback={<Spin fullscreen size='default' tip='页面正在加载...' />}> */}
-      <RouterProvider router={router} />
-      {/* </Suspense> */}
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#24be91',
+          },
+        }}
+      >
+        <RouterProvider router={router} />
+      </ConfigProvider>
     </div>
   )
 }
