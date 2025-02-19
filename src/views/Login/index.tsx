@@ -12,7 +12,14 @@ type FieldType = {
 const Login: React.FC = () => {
   const navigate = useNavigate()
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const token = await api.apiLogin(values)
+    let token
+    try {
+      token = await api.apiLogin(values)
+    } catch (error) {
+      message.error('登陆失败')
+      return
+    }
+
     // 登陆成功后将 token 存储到 localStorage
     localStorage.setItem('token', token)
     // 提示登陆成功

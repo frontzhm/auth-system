@@ -1,6 +1,15 @@
 import axios from 'axios'
+// import { AxiosRequestConfig } from 'axios';
 import { message } from 'antd'
 import { showLoading, hideLoading } from '@/utils/loading'
+
+// 扩展 AxiosRequestConfig 接口 用于自定义配置
+declare module 'axios' {
+  interface AxiosRequestConfig {
+    isHideLoading?: boolean
+    isHideError?: boolean
+  }
+}
 export type IResponse<T = any> = {
   data: T;
   code: number;
@@ -22,11 +31,13 @@ export const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(
   (config) => {
+    (!config.isHideLoading) && showLoading()
     // 显示加载状态
-    showLoading()
+    // showLoading()
     // 添加通用请求头，例如 token
     const token = localStorage.getItem('token')
     if (token) {
+      // Bearer是JWT的认证头部信息，后面加一个空格，然后加上token，这样后端就可以通过请求头部信息获取到token
       config.headers.Authorization = `Bearer ${token}`
     }
 
@@ -48,6 +59,9 @@ request.interceptors.response.use(
     const { data } = response
     const { success, code, message: msg } = data
     if (!success) {
+      if (response.config.isHideError) {
+        return Promise.reject({ code, msg, data })
+      }
       switch (code) {
         case 400:
           message.error('未授权，请登录')
