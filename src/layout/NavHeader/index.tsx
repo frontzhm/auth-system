@@ -1,17 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
 import { Breadcrumb, Dropdown, Switch } from 'antd'
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import style from './index.module.less'
 import { DownOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
 
-type NavHeaderProps = {
-  isOnlyIcon?: boolean
-  onToggle?: () => void
-}
-const NavHeader: React.FC<NavHeaderProps> = ({ isOnlyIcon }) => {
+type NavHeaderProps = {}
+const NavHeader: React.FC<NavHeaderProps> = () => {
   const [items, setItems] = useState([
     {
       title: 'Home',
@@ -34,7 +30,6 @@ const NavHeader: React.FC<NavHeaderProps> = ({ isOnlyIcon }) => {
   return (
     <div className={style.header}>
       <div className={style.left}>
-        {isOnlyIcon ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         <Breadcrumb className={style.breadcrumb} items={items} />
       </div>
       <div className={style.right}>
