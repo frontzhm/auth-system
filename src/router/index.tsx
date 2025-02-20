@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import Home from '@/views/Home'
 import { Spin } from 'antd'
+import Layout from '@/layout'
 
 /**
  *  路由懒加载
@@ -22,9 +23,18 @@ const SuspenseView = (View: React.ComponentType) => {
 }
 
 const routes = [
+  // {
+  //   path: '/',
+  //   element: SuspenseView(Home),
+  // },
   {
-    path: '/',
-    element: SuspenseView(Home),
+    element: <Layout />,
+    children: [
+      {
+        path: '/',
+        element: SuspenseView(Home),
+      },
+    ],
   },
   {
     path: '/login',
