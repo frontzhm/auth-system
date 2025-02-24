@@ -11,6 +11,7 @@ import Layout from '@/layout'
  *    当路由组件加载完成后，自动隐藏 loading 组件，显示路由组件，优化用户体验
  */
 const Login = lazy(() => import('@/views/Login'))
+const Test = lazy(() => import('@/views/Test'))
 const Error404 = lazy(() => import('@/views/Error404'))
 const Error403 = lazy(() => import('@/views/Error403'))
 
@@ -40,6 +41,11 @@ const routes = [
     path: '/login',
     // element: <Login />,
     element: SuspenseView(Login),
+  },
+  {
+    path: '/test',
+    // element: <Login />,
+    element: SuspenseView(Test),
   },
   {
     path: '/403',

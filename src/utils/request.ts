@@ -1,5 +1,4 @@
 import axios from 'axios'
-// import { AxiosRequestConfig } from 'axios';
 import { message } from 'antd'
 import { showLoading, hideLoading } from '@/utils/loading'
 
@@ -9,12 +8,6 @@ declare module 'axios' {
     isHideLoading?: boolean
     isHideError?: boolean
   }
-}
-export type IResponse<T = any> = {
-  data: T;
-  code: number;
-  message: string;
-  success: boolean;
 }
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
@@ -32,8 +25,6 @@ export const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     (!config.isHideLoading) && showLoading()
-    // 显示加载状态
-    // showLoading()
     // 添加通用请求头，例如 token
     const token = localStorage.getItem('token')
     if (token) {
@@ -63,12 +54,13 @@ request.interceptors.response.use(
         return Promise.reject({ code, msg, data })
       }
       switch (code) {
-        case 400:
-          message.error('未授权，请登录')
+        case 401:
+          message.error('请重新登录')
+          if (location.pathname !== '/login') {
+            location.href = '/login?callback=' + encodeURIComponent(location.href)
+          }
           break
-        case 404:
-          message.error('请求资源未找到')
-          break
+
         case 500:
           message.error('服务器错误')
           break
@@ -77,7 +69,7 @@ request.interceptors.response.use(
       }
       return Promise.reject(data)
     }
-    return data // 直接返回响应数据，简化后续处理
+    return data.data // 直接返回响应数据，简化后续处理
   },
   (error) => {
     // 关闭加载状态
@@ -86,9 +78,7 @@ request.interceptors.response.use(
     // 统一错误处理
     if (error.response) {
       switch (error.response.status) {
-        case 401:
-          message.error('未授权，请登录')
-          break
+
         case 404:
           message.error('请求资源未找到')
           break

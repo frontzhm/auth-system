@@ -5,9 +5,12 @@ import type { MenuProps } from 'antd'
 import style from './index.module.less'
 import { DownOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
+import { useUserStore } from '@/store/user'
 
 type NavHeaderProps = {}
 const NavHeader: React.FC<NavHeaderProps> = () => {
+  const { user, resetUser } = useUserStore((state) => ({ user: state.user, resetUser: state.resetUser }))
+
   const [items, setItems] = useState([
     {
       title: 'Home',
@@ -18,12 +21,13 @@ const NavHeader: React.FC<NavHeaderProps> = () => {
   ])
   const menuItems: MenuProps['items'] = [
     {
-      label: `邮箱：Jack@x.cn`,
-      key: '0',
-    },
-    {
       label: '退出登录',
       key: '1',
+      onClick: () => {
+        resetUser()
+        localStorage.setItem('token', '')
+        location.href = '/login?callback=' + encodeURIComponent(location.href)
+      },
     },
   ]
 
@@ -44,7 +48,7 @@ const NavHeader: React.FC<NavHeaderProps> = () => {
         <Dropdown menu={{ items: menuItems }} trigger={['click']}>
           <a className={style.dropMenu} onClick={(e) => e.preventDefault()}>
             <Space>
-              Jack
+              {user.name}
               <DownOutlined />
             </Space>
           </a>
