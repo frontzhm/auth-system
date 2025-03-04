@@ -14,6 +14,10 @@ const Login = lazy(() => import('@/views/Login'))
 const Test = lazy(() => import('@/views/Test'))
 const Error404 = lazy(() => import('@/views/Error404'))
 const Error403 = lazy(() => import('@/views/Error403'))
+const DashBoard = lazy(() => import('@/views/Dashboard'))
+const RoleManage = lazy(() => import('@/views/RoleManage'))
+const UserManage = lazy(() => import('@/views/UserManage'))
+const PermissionManage = lazy(() => import('@/views/PermissionManage'))
 
 const SuspenseView = (View: React.ComponentType) => {
   return (
@@ -34,6 +38,22 @@ const routes = [
       {
         path: '/',
         element: SuspenseView(Home),
+      },
+      {
+        path: '/dashboard',
+        element: SuspenseView(DashBoard),
+      },
+      {
+        path: '/role-manage',
+        element: SuspenseView(RoleManage),
+      },
+      {
+        path: '/user-manage',
+        element: SuspenseView(UserManage),
+      },
+      {
+        path: '/permission-manage',
+        element: SuspenseView(PermissionManage),
       },
     ],
   },
