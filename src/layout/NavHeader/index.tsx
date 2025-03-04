@@ -9,8 +9,8 @@ import { useUserStore } from '@/store/user'
 
 type NavHeaderProps = {}
 const NavHeader: React.FC<NavHeaderProps> = () => {
-  const { user, resetUser } = useUserStore((state) => ({ user: state.user, resetUser: state.resetUser }))
-
+  const user = useUserStore((state) => state.user)
+  const resetUser = useUserStore((state) => state.resetUser)
   const [items, setItems] = useState([
     {
       title: 'Home',
