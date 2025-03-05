@@ -53,9 +53,9 @@ const SideMenu: React.FC<SideMenuProps> = () => {
           key: 'role-manage',
         },
         {
-          label: '权限管理',
+          label: '菜单管理',
           icon: <UploadOutlined />,
-          key: 'permission-manage',
+          key: 'menu-manage',
         },
       ],
     },
