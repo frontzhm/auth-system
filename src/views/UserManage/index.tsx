@@ -1,15 +1,40 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, SearchForm } from 'form-render'
 import { columns, schema } from './config'
 import { Flex, Button, Table } from 'antd'
+import * as api from './api'
+import { IItemResponse } from './typing'
 
 type UserManageProps = {}
 
 const UserManage: React.FC<UserManageProps> = () => {
   const form = useForm()
-  const onSearch = (values: any) => {
-    console.log(values, 'searchData')
+  const [list, setList] = useState<IItemResponse[]>([])
+  const [total, setTotal] = useState<number>(0)
+  const [pageNum, setPageNum] = useState<number>(1)
+  const [pageSize, setPageSize] = useState<number>(10)
+  const [sortField, setSortField] = useState<string>('')
+  const [sortOrder, setSortOrder] = useState<'ascend' | 'descend'>('ascend')
+  // 查询
+  const fetchList = async () => {
+    const { list, total } = await api.apiQueryList({
+      ...form.getValues(),
+      pageNum,
+      pageSize,
+      ...(sortField && { sortField, sortOrder }),
+    })
+    setList(list)
+    setTotal(total)
   }
+  const onSearch = () => {
+    // 查询的时候重置页码
+    setPageNum(1)
+  }
+  useEffect(() => {
+    fetchList()
+    // 页码变化、排序变化时重新查询
+  }, [pageNum, pageSize, sortField, sortOrder])
+
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const createItem = () => {
     console.log('createItem')
@@ -39,7 +64,31 @@ const UserManage: React.FC<UserManageProps> = () => {
           </Button>
         </Flex>
       </Flex>
-      <Table columns={columns} dataSource={[]} rowKey='id' pagination={{ pageSize: 10 }} scroll={{ x: 1300 }} />
+      <Table
+        columns={columns}
+        dataSource={list}
+        rowKey='id'
+        onChange={(pagination, _, sorter) => {
+          setPageNum(pagination.current || 1)
+          setPageSize(pagination.pageSize || 10)
+          const sortField = Array.isArray(sorter) ? sorter[0]?.field : sorter?.field
+          const sortOrder = Array.isArray(sorter) ? sorter[0]?.order : sorter?.order
+          if (sortField && typeof sortField === 'string') {
+            setSortField(sortField)
+            if (sortOrder) {
+              setSortOrder(sortOrder)
+            }
+          }
+        }}
+        pagination={{
+          total,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          pageSize,
+          current: pageNum,
+        }}
+        scroll={{ x: 1300 }}
+      />
     </div>
   )
 }

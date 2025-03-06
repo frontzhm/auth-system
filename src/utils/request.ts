@@ -30,6 +30,7 @@ request.interceptors.request.use(
     if (token) {
       // Bearer是JWT的认证头部信息，后面加一个空格，然后加上token，这样后端就可以通过请求头部信息获取到token
       config.headers.Authorization = `Bearer ${token}`
+      config.headers.authorization = `${token}`
     }
 
     return config
