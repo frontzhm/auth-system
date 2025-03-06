@@ -3,6 +3,7 @@ import { ConfigProvider } from 'antd'
 import { RouterProvider } from 'react-router-dom'
 import { useUserStore } from '@/store/user'
 import { useEffect } from 'react'
+import zhCN from 'antd/lib/locale/zh_CN'
 
 function App() {
   const fetchUser = useUserStore((state) => state.fetchUser)
@@ -13,6 +14,7 @@ function App() {
   return (
     <div className='App'>
       <ConfigProvider
+        locale={zhCN}
         theme={{
           token: {
             colorPrimary: '#24be91',
