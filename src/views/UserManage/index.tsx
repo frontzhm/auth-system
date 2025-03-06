@@ -29,7 +29,9 @@ const UserManage: React.FC<UserManageProps> = () => {
   const onSearch = () => {
     // 查询的时候重置页码
     setPageNum(1)
+    fetchList()
   }
+  // 初次查询，或者依赖变化时查询
   useEffect(() => {
     fetchList()
     // 页码变化、排序变化时重新查询
@@ -44,7 +46,8 @@ const UserManage: React.FC<UserManageProps> = () => {
   }
   return (
     <div>
-      <SearchForm schema={schema} form={form} column={3} labelWidth={100} onSearch={onSearch} />
+      {/* searchOnMount不开启，因为useEffect已经请求了 */}
+      <SearchForm searchOnMount={false} schema={schema} form={form} column={3} labelWidth={100} onSearch={onSearch} />
       <Flex className='table-header' style={{ justifyContent: 'space-between', marginBottom: 10 }}>
         <div className='table-header-title'>用户列表</div>
         <Flex className='action-list'>
@@ -69,6 +72,7 @@ const UserManage: React.FC<UserManageProps> = () => {
         dataSource={list}
         rowKey='id'
         onChange={(pagination, _, sorter) => {
+          console.log('onChange')
           setPageNum(pagination.current || 1)
           setPageSize(pagination.pageSize || 10)
           const sortField = Array.isArray(sorter) ? sorter[0]?.field : sorter?.field
@@ -82,6 +86,8 @@ const UserManage: React.FC<UserManageProps> = () => {
         }}
         pagination={{
           total,
+          // 显示总数
+          showTotal: () => `共 ${total} 条`,
           showSizeChanger: true,
           showQuickJumper: true,
           pageSize,
