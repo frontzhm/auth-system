@@ -4,6 +4,7 @@ import { columns, schema } from './config'
 import { Flex, Button, Table } from 'antd'
 import * as api from './api'
 import { IItemResponse } from './typing'
+import ModalCreateItem from './ModalCreateItem'
 
 type UserManageProps = {}
 
@@ -38,8 +39,10 @@ const UserManage: React.FC<UserManageProps> = () => {
   }, [pageNum, pageSize, sortField, sortOrder])
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
+  const refModalCreateItem = React.useRef<any>()
   const createItem = () => {
     console.log('createItem')
+    refModalCreateItem.current.open()
   }
   const deleteItem = (ids: any[]) => {
     console.log(ids, 'deleteRecord')
@@ -95,6 +98,7 @@ const UserManage: React.FC<UserManageProps> = () => {
         }}
         scroll={{ x: 1300 }}
       />
+      <ModalCreateItem ref={refModalCreateItem} />
     </div>
   )
 }

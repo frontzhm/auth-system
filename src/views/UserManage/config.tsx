@@ -5,7 +5,7 @@ const STATE_TYPE = {
   WORK: 1,
   LEAVE: 2,
 }
-const STATE_TYPE_OPTIONS = [
+export const STATE_TYPE_OPTIONS = [
   { label: '在职', value: STATE_TYPE.WORK },
   { label: '离职', value: STATE_TYPE.LEAVE },
 ]
@@ -14,7 +14,7 @@ const ROLE = {
   ADMIN: 1,
   USER: 2,
 }
-const ROLE_OPTIONS = [
+export const ROLE_OPTIONS = [
   { label: '管理员', value: ROLE.ADMIN },
   { label: '用户', value: ROLE.USER },
 ]

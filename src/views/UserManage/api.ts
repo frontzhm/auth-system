@@ -1,10 +1,16 @@
 import request from "@/utils/request";
-import { IQueryParams, IItemResponse } from './typing'
+import { IQueryParams, IItemResponse, IUpdateParams } from './typing'
 
 export function apiQueryList(params: G_TableRequestParams<IQueryParams>): Promise<G_TableResponseData<IItemResponse>> {
   return request('/api/user/userList', {
     method: 'GET',
     params,
+  });
+}
+export function apiUpdate(params: IUpdateParams) {
+  return request('/api/user/update', {
+    method: 'POST',
+    data: params,
   });
 }
 export function apiDelete(params: any) {
@@ -13,18 +19,8 @@ export function apiDelete(params: any) {
     data: params,
   });
 }
-export function apiCreate(params: any) {
-  return request('/api/user/create', {
-    method: 'POST',
-    data: params,
-  });
-}
-export function apiUpdate(params: any) {
-  return request('/api/user/update', {
-    method: 'POST',
-    data: params,
-  });
-}
+
+
 export function apiQueryDetail(params: any) {
   return request('/api/user/detail', {
     method: 'GET',

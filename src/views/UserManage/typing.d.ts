@@ -28,3 +28,20 @@ export type IItemResponse = IItemTable & {
   roleList: string;
   userImg: string;
 }
+
+export type ICreateFormData = {
+  username: string;
+  email: string;
+  phone?: string;
+  deptId?: string;
+  job?: string;
+  role: number;
+  state: string;
+  userImg?: string;
+}
+
+export type IUpdateFormData = ICreateFormData & {
+  userId: string;
+}
+
+export type IUpdateParams = IUpdateFormData
