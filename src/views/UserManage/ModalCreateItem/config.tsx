@@ -69,12 +69,8 @@ export const schema = {
     userImg: {
       title: '头像',
       type: 'string',
-      format: 'upload',
+      widget: 'AvatarUpload',
       required: false,
-      props: {
-        action: '/api/upload', // 上传地址
-        listType: 'picture-card', // 图片卡片样式
-      },
     },
   },
 }

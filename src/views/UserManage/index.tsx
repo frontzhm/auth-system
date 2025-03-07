@@ -39,7 +39,10 @@ const UserManage: React.FC<UserManageProps> = () => {
   }, [pageNum, pageSize, sortField, sortOrder])
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
-  const refModalCreateItem = React.useRef<ModalCreateItemRef>()
+  const deleteItem = (ids: any[]) => {
+    console.log(ids, 'deleteRecord')
+  }
+  const refModalCreateItem = React.useRef<ModalCreateItemRef>(null)
   const createItem = () => {
     console.log('createItem')
     refModalCreateItem.current?.open({
@@ -52,9 +55,7 @@ const UserManage: React.FC<UserManageProps> = () => {
       record,
     })
   }
-  const deleteItem = (ids: any[]) => {
-    console.log(ids, 'deleteRecord')
-  }
+
   const columnsWithAction = [
     ...columns,
     {

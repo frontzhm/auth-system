@@ -4,6 +4,7 @@ import FormRender, { useForm } from 'form-render'
 import { schema } from './config'
 import * as api from '../api'
 import { IItemResponse } from '../typing'
+import AvatarUpload from './AvatarUpload'
 // 定义 ModalCreateItemRef 接口类型，父组件通过 ref.current 调用子组件方法
 export interface ModalCreateItemRef {
   open: (params: { action: 'create' | 'update'; record?: IItemResponse }) => void
@@ -60,7 +61,7 @@ const ModalCreateItem = forwardRef<ModalCreateItemRef, ModalCreateItemProps>(({ 
       onCancel={close}
       destroyOnClose={true}
     >
-      <FormRender maxWidth={400} labelWidth={100} schema={schema} form={form} column={1} />
+      <FormRender widgets={{ AvatarUpload }} maxWidth={400} labelWidth={100} schema={schema} form={form} column={1} />
     </Modal>
   )
 })
