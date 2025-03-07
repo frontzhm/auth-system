@@ -4,7 +4,7 @@ import { columns, schema } from './config'
 import { Flex, Button, Table } from 'antd'
 import * as api from './api'
 import { IItemResponse } from './typing'
-import ModalCreateItem from './ModalCreateItem'
+import ModalCreateItem, { ModalCreateItemRef } from './ModalCreateItem'
 
 type UserManageProps = {}
 
@@ -39,14 +39,45 @@ const UserManage: React.FC<UserManageProps> = () => {
   }, [pageNum, pageSize, sortField, sortOrder])
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
-  const refModalCreateItem = React.useRef<any>()
+  const refModalCreateItem = React.useRef<ModalCreateItemRef>()
   const createItem = () => {
     console.log('createItem')
-    refModalCreateItem.current.open()
+    refModalCreateItem.current?.open({
+      action: 'create',
+    })
+  }
+  const updateItem = (record: IItemResponse) => {
+    refModalCreateItem.current?.open({
+      action: 'update',
+      record,
+    })
   }
   const deleteItem = (ids: any[]) => {
     console.log(ids, 'deleteRecord')
   }
+  const columnsWithAction = [
+    ...columns,
+    {
+      title: '操作',
+      render: (record: IItemResponse) => (
+        <>
+          <Button type='primary' onClick={() => updateItem(record)}>
+            编辑
+          </Button>
+          <Button
+            type='primary'
+            onClick={() => {
+              // deleteRecord([record.id])
+            }}
+            danger
+            style={{ marginLeft: 10 }}
+          >
+            删除
+          </Button>
+        </>
+      ),
+    },
+  ]
   return (
     <div>
       {/* searchOnMount不开启，因为useEffect已经请求了 */}
@@ -71,7 +102,7 @@ const UserManage: React.FC<UserManageProps> = () => {
         </Flex>
       </Flex>
       <Table
-        columns={columns}
+        columns={columnsWithAction}
         dataSource={list}
         rowKey='id'
         onChange={(pagination, _, sorter) => {
@@ -98,7 +129,7 @@ const UserManage: React.FC<UserManageProps> = () => {
         }}
         scroll={{ x: 1300 }}
       />
-      <ModalCreateItem ref={refModalCreateItem} />
+      <ModalCreateItem updateList={onSearch} ref={refModalCreateItem} />
     </div>
   )
 }

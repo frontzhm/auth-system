@@ -1,4 +1,4 @@
-import { Button, TableColumnsType } from 'antd'
+import { TableColumnsType } from 'antd'
 import { IItemTable } from './typing.d'
 import dayjs from 'dayjs'
 const STATE_TYPE = {
@@ -88,25 +88,5 @@ export const columns: TableColumnsType<IItemTable> = [
     render: (lastLoginTime: string) => {
       return dayjs(lastLoginTime).format('YYYY-MM-DD HH:mm')
     },
-  },
-  {
-    title: '操作',
-    render: (record: any) => (
-      <>
-        <Button type='primary' onClick={() => {}}>
-          编辑
-        </Button>
-        <Button
-          type='primary'
-          onClick={() => {
-            // deleteRecord([record.id])
-          }}
-          danger
-          style={{ marginLeft: 10 }}
-        >
-          删除
-        </Button>
-      </>
-    ),
   },
 ]
