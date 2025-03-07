@@ -5,6 +5,8 @@ import { UploadChangeParam } from 'antd/lib/upload'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 
 const AvatarUpload = ({ value, onChange }: any) => {
+  // value 是表单传入的值，onChange 是表单传入的方法, 用于同步数据到表单, value 和 onChange 是固定的
+  // imageUrl 是组件内部的状态，用于展示图片
   const [imageUrl, setImageUrl] = useState<string>(value)
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -48,23 +50,23 @@ const AvatarUpload = ({ value, onChange }: any) => {
     }
     return isJpgOrPng && isLt2M
   }
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  )
+  // 上传图标
+  const uploadButton = <div>{loading ? <LoadingOutlined /> : <PlusOutlined />}</div>
+
   return (
-    <Upload
-      listType='picture-circle'
-      showUploadList={false}
-      headers={{ Authorization: localStorage.getItem('token') || '' }}
-      action='http://localhost:3000/api/user/upload'
-      beforeUpload={beforeUpload}
-      onChange={handleChange}
-    >
-      {imageUrl ? <Avatar style={{ height: '100%', width: '100%' }} src={imageUrl} /> : uploadButton}
-    </Upload>
+    <>
+      <Upload
+        listType='picture-circle'
+        showUploadList={false}
+        maxCount={1}
+        headers={{ Authorization: localStorage.getItem('token') || '' }}
+        action={`${import.meta.env.VITE_BASE_URL}/api/user/upload`}
+        beforeUpload={beforeUpload}
+        onChange={handleChange}
+      >
+        {imageUrl ? <Avatar style={{ height: '100px', width: '100px' }} src={imageUrl} /> : uploadButton}
+      </Upload>
+    </>
   )
 }
 

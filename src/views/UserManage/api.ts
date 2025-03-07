@@ -13,17 +13,10 @@ export function apiUpdate(params: IUpdateParams) {
     data: params,
   });
 }
-export function apiDelete(params: any) {
+export function apiDelete(ids: string[]) {
   return request('/api/user/delete', {
     method: 'POST',
-    data: params,
+    data: { ids },
   });
 }
 
-
-export function apiQueryDetail(params: any) {
-  return request('/api/user/detail', {
-    method: 'GET',
-    params,
-  });
-}

@@ -1,7 +1,7 @@
-import { forwardRef, useImperativeHandle, useState } from 'react'
-import { Modal } from 'antd'
+import { forwardRef, useImperativeHandle, useState, useEffect } from 'react'
+import { message, Modal } from 'antd'
 import FormRender, { useForm } from 'form-render'
-import { schema } from './config'
+import { schemaUpdate } from '../config'
 import * as api from '../api'
 import { IItemResponse } from '../typing'
 import AvatarUpload from './AvatarUpload'
@@ -19,34 +19,38 @@ const ModalCreateItem = forwardRef<ModalCreateItemRef, ModalCreateItemProps>(({ 
   const form = useForm()
   const [open, setOpen] = useState<boolean>(false)
   const [action, setAction] = useState<'create' | 'update'>('create')
+  const [record, setRecord] = useState<IItemResponse | undefined>(undefined)
+
+  // 打开时，如果是编辑状态，将 record 填充到表单中
+  useEffect(() => {
+    if (open && action === 'update') {
+      form.resetFields()
+      console.log('record', record)
+      form.setValues(record)
+    }
+  }, [open, action, record])
+
+  // 打开弹窗, action 为 create 时，record 为空，为 update 时，record 为当前行数据
+  const openModal = ({ action, record }: { action: 'create' | 'update'; record?: IItemResponse }) => {
+    setOpen(true)
+    setAction(action)
+    setRecord(record)
+  }
   const close = () => {
     setOpen(false)
-    // ✅ 关闭时清空表单‌
+    // 关闭时清空表单‌
     form.resetFields()
   }
+  // 暴露给父组件的方法
+  useImperativeHandle(ref, () => ({ open: openModal, close }), [form])
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      open: ({ action, record }: { action: 'create' | 'update'; record?: IItemResponse }) => {
-        // ✅ 延迟到渲染周期外‌.若 FormRender 组件因模态框未渲染而处于未挂载状态，同步调用 form.setValues 会因表单实例未绑定到 DOM 元素而失败。setTimeout 延迟操作至模态框完成挂载后，保证表单实例已初始化‌
-        setTimeout(() => {
-          setOpen(true)
-          setAction(action)
-          action === 'update' && form?.setValues(record)
-        }, 0)
-      },
-      close,
-      // 依赖项声明。form 实例可能因组件状态更新而发生变化。若未声明依赖，open 方法会通过闭包持续引用旧的 form 实例，导致 setValues 操作失效或数据不同步‌
-    }),
-    [form],
-  )
   const submit = () => {
-    form.validateFields().then((values) => {
-      console.log(values)
+    form.validateFields().then(() => {
       api.apiUpdate(form.getValues()).then(() => {
-        // ✅ 提交成功后刷新列表
+        message.success('操作成功')
+        // 提交成功后刷新列表
         updateList()
+        // 关闭弹窗
         close()
       })
     })
@@ -61,7 +65,14 @@ const ModalCreateItem = forwardRef<ModalCreateItemRef, ModalCreateItemProps>(({ 
       onCancel={close}
       destroyOnClose={true}
     >
-      <FormRender widgets={{ AvatarUpload }} maxWidth={400} labelWidth={100} schema={schema} form={form} column={1} />
+      <FormRender
+        widgets={{ AvatarUpload }}
+        maxWidth={400}
+        labelWidth={100}
+        schema={schemaUpdate}
+        form={form}
+        column={1}
+      />
     </Modal>
   )
 })

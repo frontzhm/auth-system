@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom'
 import { useUserStore } from '@/store/user'
 import { useEffect } from 'react'
 import zhCN from 'antd/lib/locale/zh_CN'
+import './App.css'
 
 function App() {
   const fetchUser = useUserStore((state) => state.fetchUser)
