@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react'
-import * as api from './api'
-import { IItemResponse } from './typing'
 
-
-export function useQuery({ form }: { form: any }) {
+export function useQuery({ form, api }: { form: any, api: any }) {
   // // 状态管理
-  const [list, setList] = useState<IItemResponse[]>([])
+  const [list, setList] = useState<Object[]>([])
   const [total, setTotal] = useState<number>(0)
   const [pageNum, setPageNum] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(10)
