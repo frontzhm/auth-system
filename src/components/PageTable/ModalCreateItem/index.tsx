@@ -9,17 +9,26 @@ import FormRender, { useForm } from 'form-render'
 export interface ModalCreateItemRef {
   open: (params: { action: 'create' | 'update'; record?: Object }) => void
   close: () => void
+  form: any
+}
+export type IModalCreateProps = {
+  titleKey: string
+  [key: string]: any
+}
+export type IUpdateFormProps = {
+  schema: any
+  [key: string]: any
 }
 // 定义 ModalCreateItemProps 属性类型，父组件传入属性，子组件通过 props 使用
 type ModalCreateItemProps = {
+  modalCreateProps?: IModalCreateProps
+  updateFormProps?: IUpdateFormProps
   updateList: () => void
-  widgets?: any
-  schemaUpdate?: any
   api?: any
 }
 
 const ModalCreateItem = forwardRef<ModalCreateItemRef, ModalCreateItemProps>(
-  ({ updateList, widgets = {}, schemaUpdate, api }, ref) => {
+  ({ updateList, api, modalCreateProps, updateFormProps }, ref) => {
     const form = useForm()
     const [open, setOpen] = useState<boolean>(false)
     const [action, setAction] = useState<'create' | 'update'>('create')
@@ -46,7 +55,7 @@ const ModalCreateItem = forwardRef<ModalCreateItemRef, ModalCreateItemProps>(
       form.resetFields()
     }
     // 暴露给父组件的方法
-    useImperativeHandle(ref, () => ({ open: openModal, close }), [form])
+    useImperativeHandle(ref, () => ({ form, open: openModal, close }), [form])
 
     const submit = () => {
       form.validateFields().then(() => {
@@ -59,17 +68,26 @@ const ModalCreateItem = forwardRef<ModalCreateItemRef, ModalCreateItemProps>(
         })
       })
     }
-
+    const modalPropsInner = {
+      width: 600,
+      open: open,
+      onOk: submit,
+      onCancel: close,
+      destroyOnClose: true,
+      title: action === 'create' ? `新建${modalCreateProps?.titleKey}` : `编辑${modalCreateProps?.titleKey}`,
+      ...modalCreateProps,
+    }
+    const updateFormPropsInner = {
+      schema: updateFormProps?.schema || {},
+      maxWidth: 400,
+      labelWidth: 100,
+      form,
+      column: 1,
+      ...updateFormProps,
+    }
     return (
-      <Modal
-        width={600}
-        title={action === 'create' ? '新建用户' : '编辑用户'}
-        open={open}
-        onOk={submit}
-        onCancel={close}
-        destroyOnClose={true}
-      >
-        <FormRender widgets={widgets} maxWidth={400} labelWidth={100} schema={schemaUpdate} form={form} column={1} />
+      <Modal {...modalPropsInner}>
+        <FormRender {...updateFormPropsInner} />
       </Modal>
     )
   },

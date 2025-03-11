@@ -1,24 +1,42 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef, forwardRef, useImperativeHandle } from 'react'
 import { useForm, SearchForm } from 'form-render'
 // import { genColumns, schemaQuery } from './config'
-import { Flex, Button, Table, Popconfirm, message } from 'antd'
+import { Flex, Button, Table, message } from 'antd'
 // import * as api from './api'
 import ModalCreateItem, { ModalCreateItemRef } from './ModalCreateItem'
+import { IModalCreateProps, IUpdateFormProps } from './ModalCreateItem'
 import { useQuery } from './useQuery'
+import { Ref } from 'react'
 
-const PageTable = ({
-  genColumns,
-  schemaQuery,
-  api,
-  schemaUpdate,
-  widgets = {},
-}: {
-  genColumns: any
-  schemaQuery: any
-  api: any
-  schemaUpdate?: any
-  widgets?: any
-}) => {
+type ISearchFormProps = {
+  schema: any
+  [key: string]: any
+}
+type ITableProps = {
+  columns?: any
+  rowKey?: string
+  [key: string]: any
+}
+type IApi = {
+  apiDelete?: (ids: string[]) => Promise<any>
+  apiUpdate?: (values: any) => Promise<any>
+  apiQueryList: (params: any) => Promise<any>
+}
+
+type IPapeTableProps = {
+  searchFormProps: ISearchFormProps
+  tableProps: ITableProps
+  modalCreateProps?: IModalCreateProps
+  updateFormProps?: IUpdateFormProps
+  api: IApi
+  actionBtns?: React.ReactNode
+}
+type PageTableRef = {
+  onSearch: () => void
+}
+
+const PageTable = forwardRef((props: IPapeTableProps, ref: Ref<PageTableRef>) => {
+  const { searchFormProps, tableProps, api, modalCreateProps, updateFormProps, actionBtns } = props
   // useForm 是 form-render 提供的 hook，用于生成表单实例
   const form = useForm()
   // 查询相关
@@ -38,73 +56,57 @@ const PageTable = ({
     })
   }
 
-  // 删除和批量删除
-  const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: (selectedRowKeys: React.Key[]) => {
-      setSelectedRowKeys(selectedRowKeys)
-    },
-  }
   const deleteItem = (ids: string[]) => {
-    api.apiDelete(ids).then(() => {
-      message.success('删除成功')
-      onSearch()
-    })
+    api.apiDelete &&
+      api.apiDelete(ids).then(() => {
+        message.success('删除成功')
+        onSearch()
+      })
   }
-
-  // 表格列配置
-  const columns = genColumns({
-    updateItem,
-    deleteItem,
-  })
-
+  useImperativeHandle(
+    ref,
+    () => ({
+      updateForm: refModalCreateItem.current?.form,
+      form,
+      api,
+      onSearch,
+      createItem,
+      updateItem,
+      deleteItem,
+    }),
+    [onSearch],
+  )
+  const tablePropsInner = {
+    dataSource: list,
+    rowKey: 'id',
+    onChange: changePageAndSort,
+    pagination,
+    scroll: { x: 1300 },
+    ...tableProps,
+  }
   return (
     <div>
-      {/* 查询表单 */}
-      <SearchForm
-        searchOnMount={false}
-        schema={schemaQuery}
-        form={form}
-        column={3}
-        labelWidth={100}
-        onSearch={onSearch}
-      />
-      {/* 操作 */}
+      <SearchForm form={form} schema={searchFormProps.schema} onSubmit={onSearch} />
       <Flex style={{ justifyContent: 'flex-end', marginBottom: 10 }}>
-        {schemaUpdate && (
+        {updateFormProps && (
           <Button type='primary' onClick={createItem}>
             新增
           </Button>
         )}
-        <Popconfirm title='确定批量删除吗？' onConfirm={() => deleteItem(selectedRowKeys)}>
-          <Button style={{ marginLeft: 10 }} type='primary' danger disabled={!selectedRowKeys.length}>
-            批量删除
-          </Button>
-        </Popconfirm>
+
+        {actionBtns}
       </Flex>
-      {/* 表格 */}
-      <Table
-        columns={columns}
-        dataSource={list}
-        rowSelection={rowSelection}
-        rowKey='id'
-        onChange={changePageAndSort}
-        pagination={pagination}
-        scroll={{ x: 1300 }}
+      <Table {...tablePropsInner} />
+
+      <ModalCreateItem
+        ref={refModalCreateItem}
+        updateList={onSearch}
+        api={api}
+        modalCreateProps={modalCreateProps}
+        updateFormProps={updateFormProps}
       />
-      {schemaUpdate && (
-        <ModalCreateItem
-          api={api}
-          schemaUpdate={schemaUpdate}
-          updateList={onSearch}
-          ref={refModalCreateItem}
-          widgets={widgets}
-        />
-      )}
     </div>
   )
-}
-
+})
 PageTable.displayName = 'PageTable'
 export default PageTable

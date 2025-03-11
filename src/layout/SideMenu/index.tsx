@@ -48,6 +48,11 @@ const SideMenu: React.FC<SideMenuProps> = () => {
           key: 'user-manage',
         },
         {
+          label: '部门管理',
+          icon: <VideoCameraOutlined />,
+          key: 'dept-manage',
+        },
+        {
           label: '角色管理',
           icon: <VideoCameraOutlined />,
           key: 'role-manage',

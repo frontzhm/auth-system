@@ -1,8 +1,6 @@
 // 查询请求的参数类型
 export type IQueryParams = {
-  userId?: string;
-  username?: string;
-  state?: boolean;
+  deptName?: string;
 }
 // 查询请求的formData类型  这里和IQueryParams一样 
 export type IQueryFormData = IQueryParams
@@ -11,33 +9,25 @@ export type IQueryFormData = IQueryParams
 // 表格每条数据类型
 export type IItemTable = {
   id: string;
-  username: string;
-  email: string;
-  role: string;
-  state: string;
+  deptName: string;
+  master: string;
+  parentId: string;
   createTime: string;
-  lastLoginTime: string;
+  updateTime: string;
+  children: IItemTable[];
 }
 
 // 查询返回的每条数据类型
 export type IItemResponse = IItemTable & {
   createId: number;
-  deptId: string;
-  deptName: string;
-  roleList: string;
-  userImg: string;
+  __v: number;
 }
 
 // 新增请求的formData类型
 export type ICreateFormData = {
-  username: string;
-  email: string;
-  phone?: string;
-  deptId?: string;
-  job?: string;
-  role: number;
-  state: string;
-  userImg?: string;
+  deptName: string;
+  master: string;
+  parentId?: string;
 }
 
 // 编辑请求的formData类型

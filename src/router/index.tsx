@@ -17,6 +17,7 @@ const Error403 = lazy(() => import('@/views/Error403'))
 const DashBoard = lazy(() => import('@/views/Dashboard'))
 const RoleManage = lazy(() => import('@/views/RoleManage'))
 const UserManage = lazy(() => import('@/views/UserManage'))
+const DeptManage = lazy(() => import('@/views/DeptManage'))
 const MenuManage = lazy(() => import('@/views/MenuManage'))
 
 const SuspenseView = (View: React.ComponentType) => {
@@ -50,6 +51,10 @@ const routes = [
       {
         path: '/user-manage',
         element: SuspenseView(UserManage),
+      },
+      {
+        path: '/dept-manage',
+        element: SuspenseView(DeptManage),
       },
       {
         path: '/menu-manage',
