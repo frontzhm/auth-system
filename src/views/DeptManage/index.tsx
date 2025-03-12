@@ -2,7 +2,6 @@ import React from 'react'
 import { genColumns, schemaQuery, schemaUpdate } from './config'
 import * as api from './api'
 import PageTable from '@/components/PageTable'
-import AvatarUpload from './components/AvatarUpload'
 import { apiQueryList as apiUserList } from '@/views/UserManage/api'
 
 const DeptManage: React.FC = () => {
@@ -50,7 +49,7 @@ const DeptManage: React.FC = () => {
       searchFormProps={{ schema: schemaQuery }}
       tableProps={{ columns, rowKey: 'id' }}
       modalCreateProps={{ titleKey: '部门' }}
-      updateFormProps={{ schema: schemaUpdate, onMount, widgets: { AvatarUpload } }}
+      updateFormProps={{ schema: schemaUpdate, onMount }}
       api={api}
     />
   )
