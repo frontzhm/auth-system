@@ -1,7 +1,6 @@
 // 查询请求的参数类型
 export type IQueryParams = {
-  menuName?: string;
-  menuState?: number;
+  roleName?: string;
 }
 // 查询请求的formData类型  这里和IQueryParams一样 
 export type IQueryFormData = IQueryParams
@@ -9,17 +8,9 @@ export type IQueryFormData = IQueryParams
 // 表格每条数据类型
 export type IItemTable = {
   id: string;
-  menuName: string;
-  menuType: number;
-  authCode: string;
-  path: string;
+  roleName: string;
   createTime: string;
-  orderBy: number;
-  menuState: number;
-  icon: string;
-  parentId: string;
-  component: string;
-  children: IItemTable[];
+  authCodes: string[]
 }
 
 // 查询返回的每条数据类型
@@ -29,16 +20,8 @@ export type IItemResponse = IItemTable & {
 
 // 新增请求的formData类型
 export type ICreateFormData = {
-  parentId?: string;
-  menuType: number;
-  menuName: string;
-  icon?: string;
-  path?: string;
-  component?: string;
-  authCode?: string;
-  orderBy?: number;
-  menuState: number;
-
+  roleName: string;
+  authCodes: string[];
 }
 
 // 编辑请求的formData类型

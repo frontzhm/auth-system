@@ -72,7 +72,7 @@ export const genColumns = ({
         return MENU_TYPE_OPTIONS.find((item) => item.value === menuType)?.label
       },
     },
-    { title: '权限标识', dataIndex: 'menuCode', width: 100 },
+    { title: '权限标识', dataIndex: 'authCode', width: 100 },
     { title: '路由地址', dataIndex: 'path', width: 100 },
     { title: '组件名称', dataIndex: 'component', width: 100 },
     {
@@ -183,7 +183,7 @@ export const schemaUpdate = {
       },
       default: MENU_TYPE.MENU,
     },
-    menuCode: {
+    authCode: {
       title: '权限标识',
       type: 'string',
       required: false,
