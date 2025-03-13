@@ -71,13 +71,6 @@ export const genColumns = ({
     { title: '用户名', dataIndex: 'username' },
     { title: '用户邮箱', dataIndex: 'email' },
     {
-      title: '用户角色',
-      dataIndex: 'role',
-      render: (role: number) => {
-        return ROLE_OPTIONS.find((item) => item.value === role)?.label || '--'
-      },
-    },
-    {
       title: '用户状态',
       dataIndex: 'state',
       render: (state: number) => {
@@ -163,10 +156,8 @@ export const schemaUpdate = {
       widget: 'treeSelect',
       required: false,
       props: {
-        treeData: [
-          { title: '总部', value: '0', children: [{ title: '研发部', value: '0-0' }] },
-          { title: '分部', value: '1', children: [{ title: '销售部', value: '1-0' }] },
-        ],
+        // 请求部门列表接口
+        treeData: [],
       },
     },
     job: {
@@ -175,14 +166,16 @@ export const schemaUpdate = {
       required: false,
       placeholder: '请输入岗位名称',
     },
-    role: {
+    roleList: {
       title: '角色',
-      type: 'number',
       widget: 'select',
       required: true,
       props: {
-        options: ROLE_OPTIONS,
+        mode: 'multiple',
+        // 请求角色列表接口
+        options: [],
       },
+      default: [],
     },
     state: {
       title: '状态',
