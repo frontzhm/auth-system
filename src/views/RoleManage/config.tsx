@@ -34,6 +34,7 @@ export const genColumns = ({
   const columns: TableColumnsType<IItemTable> = [
     { title: '角色ID', dataIndex: 'id', width: 150 },
     { title: '角色名称', dataIndex: 'roleName', width: 150 },
+    { title: '角色编码', dataIndex: 'roleCode', width: 150 },
     {
       title: '创建时间',
       dataIndex: 'createTime',
@@ -86,6 +87,15 @@ export const schemaUpdate = {
       required: true,
       props: {
         placeholder: '请输入角色名称',
+      },
+    },
+    roleCode: {
+      title: '角色编码',
+      type: 'string',
+      widget: 'input',
+      required: true,
+      props: {
+        placeholder: '请输入角色编码',
       },
     },
     authCodes: {

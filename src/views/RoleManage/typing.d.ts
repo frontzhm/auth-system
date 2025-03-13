@@ -9,6 +9,7 @@ export type IQueryFormData = IQueryParams
 export type IItemTable = {
   id: string;
   roleName: string;
+  roleCode: string;
   createTime: string;
   authCodes: string[]
 }
@@ -21,6 +22,7 @@ export type IItemResponse = IItemTable & {
 // 新增请求的formData类型
 export type ICreateFormData = {
   roleName: string;
+  roleCode: string;
   authCodes: string[];
 }
 

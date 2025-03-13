@@ -1,5 +1,15 @@
 import request from "@/utils/request";
 
+export type IPermission = {
+  parentId: string,
+  id: string,
+  menuName?: string,
+  menuType: number,
+  authCode: string,
+  path?: string,
+  children?: IPermission[]
+}
+
 export type IUserInfo = {
   id?: number
   name: string
@@ -16,6 +26,10 @@ export type IUserInfo = {
   avatar?: string
   introduction?: string
   username?: string
+  roles: string[],
+  permissions: IPermission[]
+  pathToButtonsMap?: Record<string, string[]>
+  [key: string]: any
 
 }
 

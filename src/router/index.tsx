@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react'
 import Home from '@/views/Home'
 import { Spin } from 'antd'
 import Layout from '@/layout'
+import RequireAuth from '@/components/RequireAuth'
 
 /**
  *  路由懒加载
@@ -34,7 +35,12 @@ const routes = [
   //   element: SuspenseView(Home),
   // },
   {
-    element: <Layout />,
+    // element: <Layout />,
+    element: (
+      <RequireAuth>
+        <Layout />
+      </RequireAuth>
+    ),
     children: [
       {
         path: '/',
