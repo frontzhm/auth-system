@@ -18,4 +18,4 @@ pnpm run start
 
 ## 项目截图
 
-![auth_role_3.gif](https://blog-huahua.oss-cn-beijing.aliyuncs.com/blog/code/auth_role_3.gif)
+![auth_role_4.gif](https://blog-huahua.oss-cn-beijing.aliyuncs.com/blog/code/auth_role_4.gif)
