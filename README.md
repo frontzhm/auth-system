@@ -14,7 +14,7 @@ pnpm install
 pnpm run start
 ```
 
-如果想要运行接口，需要后端项目
+如果想要运行接口，需要[后端项目](https://github.com/frontzhm/auth-system-server)，基本仅做展示，后端项目做的粗糙。
 
 ## 项目截图
 
