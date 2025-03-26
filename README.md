@@ -1,50 +1,21 @@
-# React + TypeScript + Vite
+# auth-system
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+权限管理系统的实现，包含用户管理、角色管理、权限管理、菜单管理等功能。
+本项目是一个后台系统技术选型React18 + ReactRouter7 + Vite4 + Antd5 + zustand + TS。
+其中包含权限系统，包括登录、权限、菜单、用户、角色等功能。
+[从零搭建的具体文档](https://juejin.cn/column/7468533169966120987)
 
-Currently, two official plugins are available:
+## 项目结构
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+本项目采用前后端分离的方式进行开发，此为前端项目代码。
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```shell
+pnpm install
+pnpm run start
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+如果想要运行接口，需要后端项目
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## 项目截图
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+![auth_role_3.gif](https://blog-huahua.oss-cn-beijing.aliyuncs.com/blog/code/auth_role_3.gif)
