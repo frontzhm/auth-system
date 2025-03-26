@@ -10,6 +10,8 @@
 本项目采用前后端分离的方式进行开发，此为前端项目代码。
 
 ```shell
+git clone git@github.com:frontzhm/auth-system.git
+cd auth-system
 pnpm install
 pnpm run start
 ```
