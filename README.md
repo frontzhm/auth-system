@@ -14,9 +14,18 @@ git clone git@github.com:frontzhm/auth-system.git
 cd auth-system
 pnpm install
 pnpm run start
+# 文档
+pnpm run docs
 ```
 
 如果想要运行接口，需要[后端项目](https://github.com/frontzhm/auth-system-server)，基本仅做展示，后端项目做的粗糙。
+
+```shell
+git clone git@github.com:frontzhm/auth-system-server.git
+cd auth-system-server
+pnpm install
+pnpm run start
+```
 
 ## 项目截图
 
